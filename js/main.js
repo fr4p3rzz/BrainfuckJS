@@ -83,7 +83,6 @@ function ReadThatBrainfuck(value) {
                 break;
 
             case "]":
-                //Loop();
                 break;
 
             case ".":
@@ -179,8 +178,12 @@ function Loop(loopContent) {
             console.log(loopContentArray.length);
             ReadThatBrainfuck(loopContentArray[i]);
         }
-        //byteStack[controller] -= 1;
     }
+
+    cleanLoop();
+}
+
+function cleanLoop(){
     document.getElementById("stack").innerText = byteStack;
     document.getElementById('input').value += loopContent;
     document.body.removeChild(loopInput);
