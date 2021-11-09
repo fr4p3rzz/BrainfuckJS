@@ -180,10 +180,10 @@ function Loop(loopContent) {
         }
     }
 
-    cleanLoop();
+    cleanLoop(loopContent);
 }
 
-function cleanLoop(){
+function cleanLoop(loopContent){
     document.getElementById("stack").innerText = byteStack;
     document.getElementById('input').value += loopContent;
     document.body.removeChild(loopInput);
