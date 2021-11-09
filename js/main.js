@@ -3,8 +3,7 @@ var byteStack = [];
 var stackLength = 16;
 var acceptedChars = ["+", "-", ">", "<", "[", "]", ".", ","];
 var position = 0;
-var startLoopPos = 0;
-var endLoopPos = 0;
+var code = "";
 
 // Set all bytes to 0 as starting point
 resetBytestack();
@@ -22,6 +21,7 @@ document.getElementById('reset').addEventListener("click", function() {
 document.getElementById('input').addEventListener("keydown", (e) => {
 
     document.getElementById("stack").innerText = byteStack;
+    code = document.getElementById('input').value;
 
     // e.key => display key
     // e.which => display ASCII value
@@ -79,11 +79,11 @@ function ReadThatBrainfuck(value) {
                 break;
 
             case "[":
-
+                createLoop();
                 break;
 
             case "]":
-                Loop();
+                //Loop();
                 break;
 
             case ".":
@@ -119,26 +119,70 @@ function print() {
     document.getElementById("output").innerText += String.fromCharCode(byteStack[position]);
 }
 
-function Loop() {
-    let content = document.getElementById("input").value;
-    let endLoopPos = content.length
-    let openBracketPos = content.indexOf("[");
+function createLoop(){
 
-    if (openBracketPos != -1) {
+    let startLoopPos = code.length;
+    const loopInput = document.createElement("input");
+    loopInput.setAttribute("type", "text");
+    loopInput.setAttribute("id", "loopInput");
+    document.body.appendChild(loopInput);
+    loopInput.select();
 
-        let startLoopPos = openBracketPos;
-        let loopContent = content.substring(startLoopPos + 1, endLoopPos);
-        let loopContentArray = loopContent.split('')
-        let controller = position - 1;
+    document.getElementById('input').disabled = true;
 
-        console.log(startLoopPos + " " + endLoopPos);
-        console.log(loopContent);
+    let loopContent = "[";
+    document.getElementById('loopInput').addEventListener("keydown", (e) => {
 
-        while (byteStack[controller] != 0) {
-            for (let i = 0; i < loopContentArray.length; i++) {
-                ReadThatBrainfuck(loopContentArray[i]);
-            }
-            byteStack[controller] -= 1;
+        if(acceptedChars.includes(e.key))
+        {
+            loopContent += e.key;
         }
+
+        if(e.key == "Backspace" || e.key == "Delete")
+        {
+            loopContent = loopContent.slice(0, -1);
+        }
+
+        if(e.key == "Enter")
+        {
+            Loop(loopContent);
+        }
+
+    })
+}
+
+function Loop(loopContent) {
+
+    let loops = [];
+
+    let i = 0;
+    while(loopContent.lastIndexOf("[") != -1)
+    {
+        loops[i] = loopContent.substring(loopContent.lastIndexOf("[") + 1, loopContent.indexOf("]"));
+
+        let loopResult = "";
+        for(j = 0; j < byteStack[position]; j++)
+        {
+            loopResult += loops[i];
+        }
+
+        loopContent = loopContent.slice(0, loopContent.lastIndexOf("[")) + loopResult + loopContent.slice(loopContent.indexOf("]") + 1, loopContent.length);
+        i++;
     }
+
+    let loopContentArray = loopContent.split('')
+    let controller = position;
+
+    while (byteStack[controller] != 0) {
+        console.log(byteStack[controller]);
+        for (let i = 0; i < loopContentArray.length; i++) {
+            console.log(loopContentArray.length);
+            ReadThatBrainfuck(loopContentArray[i]);
+        }
+        //byteStack[controller] -= 1;
+    }
+    document.getElementById("stack").innerText = byteStack;
+    document.getElementById('input').value += loopContent;
+    document.body.removeChild(loopInput);
+    document.getElementById('input').disabled = false;
 }
