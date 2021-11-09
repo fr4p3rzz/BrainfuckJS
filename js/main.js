@@ -7,17 +7,19 @@ var startLoopPos = 0;
 var endLoopPos = 0;
 
 // Set all bytes to 0 as starting point
-for (let i = 0; i < stackLength; i++) {
-    byteStack[i] = 0;
-}
+resetBytestack();
 
 document.getElementById("stack").innerText = byteStack;
 
+document.getElementById('reset').addEventListener("click", function() {
+    resetBytestack();
+    document.getElementById("stack").innerText = byteStack;
+    document.getElementById('input').value = '';
+})
+
 document.getElementById('input').addEventListener("keydown", (e) => {
 
-
     document.getElementById("stack").innerText = byteStack;
-
 
     // e.key => display key
     // e.which => display ASCII value
@@ -29,6 +31,12 @@ document.getElementById('input').addEventListener("keydown", (e) => {
         document.getElementById("stack").innerText = byteStack;
     });
 })
+
+function resetBytestack() {
+    for (let i = 0; i < stackLength; i++) {
+        byteStack[i] = 0;
+    }
+}
 
 function setByteBounds(i) {
     if (i < 0 || i > 255) {
