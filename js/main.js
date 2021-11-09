@@ -41,8 +41,12 @@ function resetBytestack() {
 }
 
 function setByteBounds(i) {
-    if (i < 0 || i > 255) {
+    if (i > 255) {
         i = 0;
+    }
+    else if( i < 0)
+    {
+        i = 255;
     }
 
     return i;
