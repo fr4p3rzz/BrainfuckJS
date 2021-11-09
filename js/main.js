@@ -15,6 +15,8 @@ document.getElementById('reset').addEventListener("click", function() {
     resetBytestack();
     document.getElementById("stack").innerText = byteStack;
     document.getElementById('input').value = '';
+    document.getElementById("output").innerText = "Output: ";
+    position = 0;
 })
 
 document.getElementById('input').addEventListener("keydown", (e) => {
