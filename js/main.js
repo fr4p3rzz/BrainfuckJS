@@ -1,6 +1,6 @@
 //Real time Brainfuck interpreter, written in JS
 var byteStack = [];
-var stackLength = 16;
+var stackLength = 32;
 var acceptedChars = ["+", "-", ">", "<", "[", "]", ".", ","];
 var position = 0;
 var code = "";
@@ -8,7 +8,7 @@ var code = "";
 // Set all bytes to 0 as starting point
 resetBytestack();
 
-document.getElementById("stack").innerText = byteStack;
+printByteStack(byteStack);
 
 document.getElementById('reset').addEventListener("click", function() {
     resetBytestack();
@@ -20,7 +20,7 @@ document.getElementById('reset').addEventListener("click", function() {
 
 document.getElementById('input').addEventListener("keydown", (e) => {
 
-    document.getElementById("stack").innerText = byteStack;
+    printByteStack(byteStack);
     code = document.getElementById('input').value;
 
     // e.key => display key
@@ -30,7 +30,7 @@ document.getElementById('input').addEventListener("keydown", (e) => {
 
     // Used to prevent a delay in displaying values due to OS delay input rules
     document.getElementById('input').addEventListener("keyup", (e) => {
-        document.getElementById("stack").innerText = byteStack;
+        printByteStack(byteStack);
     });
 })
 
@@ -57,6 +57,25 @@ function setStackBounds(i) {
 
         return i;
     }
+}
+
+function printByteStack(byteStack)
+{
+    document.getElementById("stack").innerHTML = "";
+    for(let i = 0; i < byteStack.length; i++)
+    {
+        let newByte = document.createElement("P");
+        newByte.setAttribute("class", "col-sm");
+        newByte.setAttribute("id", "byte byte"+i);
+        newByte.innerText = byteStack[i];
+        if(i == position)
+        {
+            newByte.setAttribute("style", "color: red");
+        }
+        
+        document.getElementById("stack").appendChild(newByte);
+    }
+
 }
 
 function ReadThatBrainfuck(value) {
@@ -122,9 +141,10 @@ function createLoop(){
 
     let startLoopPos = code.length;
     const loopInput = document.createElement("input");
+    const container = document.getElementById("main-container");
     loopInput.setAttribute("type", "text");
     loopInput.setAttribute("id", "loopInput");
-    document.body.appendChild(loopInput);
+    container.appendChild(loopInput);
     loopInput.select();
 
     document.getElementById('input').disabled = true;
@@ -184,8 +204,8 @@ function Loop(loopContent) {
 }
 
 function cleanLoop(loopContent){
-    document.getElementById("stack").innerText = byteStack;
+    printByteStack(byteStack);
     document.getElementById('input').value += loopContent;
-    document.body.removeChild(loopInput);
+    document.getElementById("main-container").removeChild(loopInput);
     document.getElementById('input').disabled = false;
 }
