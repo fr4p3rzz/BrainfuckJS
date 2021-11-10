@@ -22,7 +22,7 @@ document.getElementById('byteStack-length').addEventListener("keyup", (e) => {
     {
         stackLength = stackDefaultLength;
     }
-    
+
     resetBytestack();
     position = 0;
     printByteStack(byteStack);
