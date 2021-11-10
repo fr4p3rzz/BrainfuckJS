@@ -82,6 +82,11 @@ function printByteStack(byteStack)
 
 }
 
+function setOpacity(object, value)
+{
+    object.setAttribute("style", "opacity: "+ value);
+}
+
 function ReadThatBrainfuck(value) {
     if (acceptedChars.includes(value)) {
         switch (value) {
@@ -145,21 +150,29 @@ function print() {
 function ask(){
 
     const askInput = document.createElement("input");
-    const container = document.getElementById("main-container");
+    const container = document.createElement("div");
+    container.setAttribute("class", "container ask-container")
     askInput.setAttribute("type", "text");
     askInput.setAttribute("id", "askInput");
     container.appendChild(askInput);
+    document.body.appendChild(container);
+
+    setOpacity(document.getElementById("main-container"), 0.1);
     askInput.select();
   
     document.getElementById('input').disabled = true;
 
     askInput.addEventListener("keydown", (e) =>{
 
-        byteStack[position] += e.key.charCodeAt(0);
-
-        container.removeChild(askInput);
-        document.getElementById('input').disabled = false;
-        document.getElementById('input').select();
+        if(e.key != "Shift" && !e.ctrlKey && e.key != "AltGraph")
+        {
+            byteStack[position] = setByteBounds(byteStack[position] + e.key.charCodeAt(0));
+            document.getElementsByClassName("ask-container")[0].remove();
+            document.getElementById('input').disabled = false;
+            document.getElementById('input').value += e.key;
+            document.getElementById('input').select();
+            setOpacity(document.getElementById("main-container"), 1);
+        }
     })
 }
 
@@ -167,10 +180,15 @@ function createLoop(){
 
     let startLoopPos = code.length;
     const loopInput = document.createElement("input");
-    const container = document.getElementById("main-container");
+    const container = document.createElement("div");
+    container.setAttribute("class", "container loop-container")
     loopInput.setAttribute("type", "text");
     loopInput.setAttribute("id", "loopInput");
     container.appendChild(loopInput);
+
+    setOpacity(document.getElementById("main-container"), 0.1);
+    document.body.appendChild(container);
+
     loopInput.select();
 
     document.getElementById('input').disabled = true;
@@ -219,9 +237,7 @@ function Loop(loopContent) {
     let controller = position;
 
     while (byteStack[controller] != 0) {
-        console.log(byteStack[controller]);
         for (let i = 0; i < loopContentArray.length; i++) {
-            console.log(loopContentArray.length);
             ReadThatBrainfuck(loopContentArray[i]);
         }
     }
@@ -230,8 +246,12 @@ function Loop(loopContent) {
 }
 
 function cleanLoop(loopContent){
+
     printByteStack(byteStack);
+
     document.getElementById('input').value += loopContent;
-    document.getElementById("main-container").removeChild(loopInput);
+    document.getElementsByClassName("loop-container")[0].remove();
     document.getElementById('input').disabled = false;
+    setOpacity(document.getElementById("main-container"), 1);
+    document.getElementById('input').select();
 }
