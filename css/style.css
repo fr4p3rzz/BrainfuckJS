@@ -58,6 +58,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.byte{
+        width: 1%;
+}
+
 .bg-warning{
     background-color: coral !important;
 }

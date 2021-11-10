@@ -102,7 +102,7 @@ function printByteStack(byteStack)
     for(let i = 0; i < byteStack.length; i++)
     {
         let newByte = document.createElement("P");
-        newByte.setAttribute("class", "col-sm");
+        newByte.setAttribute("class", "col-sm byte");
         newByte.setAttribute("id", "byte byte"+i);
         newByte.innerText = byteStack[i];
         if(i == position)
