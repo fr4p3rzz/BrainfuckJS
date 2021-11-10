@@ -29,6 +29,18 @@ document.getElementById('byteStack-length').addEventListener("keyup", (e) => {
     document.getElementById('input').value = '';
 })
 
+document.getElementById('force').addEventListener("click", function() {
+    forceReading(document.getElementById("input").value);
+    printByteStack(byteStack);
+})
+
+document.getElementById('force').addEventListener("mouseover", function() {
+    document.getElementById('force').innerText = "LETS F#@! THAT BRAIN!"
+    document.getElementById('force').addEventListener("mouseout", function() {
+        document.getElementById('force').innerText = "Brainfuck interpreter"
+    })
+})
+
 document.getElementById('reset').addEventListener("click", function() {
     resetBytestack();
     document.getElementById('input').value = '';
@@ -118,6 +130,21 @@ function printByteStack(byteStack)
 function setOpacity(object, value)
 {
     object.setAttribute("style", "opacity: "+ value);
+}
+
+function forceReading(string)
+{
+    if(string == "")
+    {
+        string = "+++++++>++++++++++<->++++++++++<->++++++++++<->++++++++++<->++++++++++<->++++++++++<->++++++++++<->++.<<+++++++>>++++++++++<<->>++++++++++<<->>++++++++++<<->>++++++++++<<->>++++++++++<<->>++++++++++<<->>++++++++++<<->>-.<<+++++++>>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++.<<<+++++++>>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>+++++++-.<<<<++++++++>>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>-.<<<<<++++++>>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>--.<<<<<<++++>>>>>>>++++++++++<<<<<<<->>>>>>>++++++++++<<<<<<<->>>>>>>++++++++++<<<<<<<->>>>>>>++++++++++<<<<<<<->>>>>>>+.";
+        document.getElementById("input").value = string;
+    }
+
+    let code = Array.from(string);
+    for(let i = 0; i < code.length; i++)
+    {
+        ReadThatBrainfuck(code[i]);
+    }
 }
 
 function ReadThatBrainfuck(value) {
