@@ -169,9 +169,9 @@ function ask(){
             byteStack[position] = setByteBounds(byteStack[position] + e.key.charCodeAt(0));
             document.getElementsByClassName("ask-container")[0].remove();
             document.getElementById('input').disabled = false;
-            document.getElementById('input').value += e.key;
-            document.getElementById('input').select();
             setOpacity(document.getElementById("main-container"), 1);
+            document.getElementById('input').value += e.key;
+            printByteStack(byteStack);
         }
     })
 }
@@ -249,9 +249,9 @@ function cleanLoop(loopContent){
 
     printByteStack(byteStack);
 
-    document.getElementById('input').value += loopContent;
     document.getElementsByClassName("loop-container")[0].remove();
     document.getElementById('input').disabled = false;
     setOpacity(document.getElementById("main-container"), 1);
-    document.getElementById('input').select();
+    document.getElementById('input').value += loopContent;
+
 }
