@@ -59,7 +59,8 @@ input::-webkit-inner-spin-button {
 }
 
 .byte{
-        width: 1%;
+    width: 1%;
+    font-size: 21px;
 }
 
 .bg-warning{
