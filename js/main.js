@@ -1,6 +1,7 @@
 //Real time Brainfuck interpreter, written in JS
 var byteStack = [];
-var stackLength = 32;
+var stackDefaultLength = 32;
+var stackLength = stackDefaultLength;
 var acceptedChars = ["+", "-", ">", "<", "[", "]", ".", ","];
 var position = 0;
 var code = "";
@@ -10,12 +11,43 @@ resetBytestack();
 
 printByteStack(byteStack);
 
+document.getElementById('byteStack-length').addEventListener("keyup", (e) => {
+
+    let value = document.getElementById('byteStack-length').value;
+    if(value > 0 && value <= 32)
+    {
+        stackLength = value
+    }
+    else
+    {
+        stackLength = stackDefaultLength;
+    }
+    
+    resetBytestack();
+    position = 0;
+    printByteStack(byteStack);
+    document.getElementById('input').value = '';
+})
+
 document.getElementById('reset').addEventListener("click", function() {
     resetBytestack();
     document.getElementById('input').value = '';
     document.getElementById("output").innerText = "Output: ";
     position = 0;
     printByteStack(byteStack);
+})
+
+document.getElementById('how-to').addEventListener("click", function() {
+    let instructions = document.getElementById("instructions");
+    if(instructions.style.display != "none")
+    {
+        instructions.setAttribute("style", "display: none;");
+    }
+    else
+    {
+        instructions.setAttribute("style", "display: relative;");
+    }
+
 })
 
 document.getElementById('input').addEventListener("keydown", (e) => {
@@ -35,6 +67,7 @@ document.getElementById('input').addEventListener("keydown", (e) => {
 })
 
 function resetBytestack() {
+    byteStack = [];
     for (let i = 0; i < stackLength; i++) {
         byteStack[i] = 0;
     }

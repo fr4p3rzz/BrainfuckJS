@@ -11,6 +11,10 @@ textarea {
     font-weight: 555;
 }
 
+h1{
+    margin-top: 3em;
+}
+
 #gitLink{
     margin-left: 1%;
     color: coral;
@@ -41,6 +45,17 @@ textarea {
     margin-left: 45%;
     text-align: center;
     background-color: burlywood;
+}
+
+#byteStack-length{
+    height: 100%;
+    background-color: burlywood;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .bg-warning{
