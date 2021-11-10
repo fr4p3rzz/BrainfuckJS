@@ -12,10 +12,10 @@ printByteStack(byteStack);
 
 document.getElementById('reset').addEventListener("click", function() {
     resetBytestack();
-    document.getElementById("stack").innerText = byteStack;
     document.getElementById('input').value = '';
     document.getElementById("output").innerText = "Output: ";
     position = 0;
+    printByteStack(byteStack);
 })
 
 document.getElementById('input').addEventListener("keydown", (e) => {
@@ -113,6 +113,7 @@ function ReadThatBrainfuck(value) {
                 break;
 
             case ",":
+                ask();
                 break;
 
             default:
@@ -139,6 +140,27 @@ function moveBack() {
 
 function print() {
     document.getElementById("output").innerText += String.fromCharCode(byteStack[position]);
+}
+
+function ask(){
+
+    const askInput = document.createElement("input");
+    const container = document.getElementById("main-container");
+    askInput.setAttribute("type", "text");
+    askInput.setAttribute("id", "askInput");
+    container.appendChild(askInput);
+    askInput.select();
+  
+    document.getElementById('input').disabled = true;
+
+    askInput.addEventListener("keydown", (e) =>{
+
+        byteStack[position] += e.key.charCodeAt(0);
+
+        container.removeChild(askInput);
+        document.getElementById('input').disabled = false;
+        document.getElementById('input').select();
+    })
 }
 
 function createLoop(){
