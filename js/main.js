@@ -14,12 +14,9 @@ printByteStack(byteStack);
 document.getElementById('byteStack-length').addEventListener("keyup", (e) => {
 
     let value = document.getElementById('byteStack-length').value;
-    if(value > 0 && value <= 32)
-    {
+    if (value > 0 && value <= 32) {
         stackLength = value
-    }
-    else
-    {
+    } else {
         stackLength = stackDefaultLength;
     }
 
@@ -51,12 +48,9 @@ document.getElementById('reset').addEventListener("click", function() {
 
 document.getElementById('how-to').addEventListener("click", function() {
     let instructions = document.getElementById("instructions");
-    if(instructions.style.display != "none")
-    {
+    if (instructions.style.display != "none") {
         instructions.setAttribute("style", "display: none;");
-    }
-    else
-    {
+    } else {
         instructions.setAttribute("style", "display: relative;");
     }
 
@@ -88,9 +82,7 @@ function resetBytestack() {
 function setByteBounds(i) {
     if (i > 255) {
         i = 0;
-    }
-    else if( i < 0)
-    {
+    } else if (i < 0) {
         i = 255;
     }
 
@@ -108,41 +100,34 @@ function setStackBounds(i) {
     }
 }
 
-function printByteStack(byteStack)
-{
+function printByteStack(byteStack) {
     document.getElementById("stack").innerHTML = "";
-    for(let i = 0; i < byteStack.length; i++)
-    {
+    for (let i = 0; i < byteStack.length; i++) {
         let newByte = document.createElement("P");
         newByte.setAttribute("class", "col-sm byte");
-        newByte.setAttribute("id", "byte byte"+i);
+        newByte.setAttribute("id", "byte byte" + i);
         newByte.innerText = byteStack[i];
-        if(i == position)
-        {
+        if (i == position) {
             newByte.setAttribute("style", "color: red");
         }
-        
+
         document.getElementById("stack").appendChild(newByte);
     }
 
 }
 
-function setOpacity(object, value)
-{
-    object.setAttribute("style", "opacity: "+ value);
+function setOpacity(object, value) {
+    object.setAttribute("style", "opacity: " + value);
 }
 
-function forceReading(string)
-{
-    if(string == "")
-    {
+function forceReading(string) {
+    if (string == "") {
         string = "+++++++>++++++++++<->++++++++++<->++++++++++<->++++++++++<->++++++++++<->++++++++++<->++++++++++<->++.<<+++++++>>++++++++++<<->>++++++++++<<->>++++++++++<<->>++++++++++<<->>++++++++++<<->>++++++++++<<->>++++++++++<<->>-.<<+++++++>>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++++++<<<->>>++++++.<<<+++++++>>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>++++++++++<<<<->>>>+++++++-.<<<<++++++++>>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>++++++++++<<<<<->>>>>-.<<<<<++++++>>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>++++++++++<<<<<<->>>>>>--.<<<<<<++++>>>>>>>++++++++++<<<<<<<->>>>>>>++++++++++<<<<<<<->>>>>>>++++++++++<<<<<<<->>>>>>>++++++++++<<<<<<<->>>>>>>+.";
         document.getElementById("input").value = string;
     }
 
     let code = Array.from(string);
-    for(let i = 0; i < code.length; i++)
-    {
+    for (let i = 0; i < code.length; i++) {
         ReadThatBrainfuck(code[i]);
     }
 }
@@ -207,7 +192,7 @@ function print() {
     document.getElementById("output").innerText += String.fromCharCode(byteStack[position]);
 }
 
-function ask(){
+function ask() {
 
     const askInput = document.createElement("input");
     const container = document.createElement("div");
@@ -219,13 +204,12 @@ function ask(){
 
     setOpacity(document.getElementById("main-container"), 0.1);
     askInput.select();
-  
+
     document.getElementById('input').disabled = true;
 
-    askInput.addEventListener("keydown", (e) =>{
+    askInput.addEventListener("keydown", (e) => {
 
-        if(e.key != "Shift" && !e.ctrlKey && e.key != "AltGraph")
-        {
+        if (e.key != "Shift" && !e.ctrlKey && e.key != "AltGraph") {
             byteStack[position] = setByteBounds(byteStack[position] + e.key.charCodeAt(0));
             document.getElementsByClassName("ask-container")[0].remove();
             document.getElementById('input').disabled = false;
@@ -236,7 +220,7 @@ function ask(){
     })
 }
 
-function createLoop(){
+function createLoop() {
 
     let startLoopPos = code.length;
     const loopInput = document.createElement("input");
@@ -256,18 +240,15 @@ function createLoop(){
     let loopContent = "[";
     document.getElementById('loopInput').addEventListener("keydown", (e) => {
 
-        if(acceptedChars.includes(e.key))
-        {
+        if (acceptedChars.includes(e.key)) {
             loopContent += e.key;
         }
 
-        if(e.key == "Backspace" || e.key == "Delete")
-        {
+        if (e.key == "Backspace" || e.key == "Delete") {
             loopContent = loopContent.slice(0, -1);
         }
 
-        if(e.key == "Enter")
-        {
+        if (e.key == "Enter") {
             Loop(loopContent);
         }
 
@@ -279,13 +260,11 @@ function Loop(loopContent) {
     let loops = [];
 
     let i = 0;
-    while(loopContent.lastIndexOf("[") != -1)
-    {
+    while (loopContent.lastIndexOf("[") != -1) {
         loops[i] = loopContent.substring(loopContent.lastIndexOf("[") + 1, loopContent.indexOf("]"));
 
         let loopResult = "";
-        for(j = 0; j < byteStack[position]; j++)
-        {
+        for (j = 0; j < byteStack[position]; j++) {
             loopResult += loops[i];
         }
 
@@ -305,7 +284,7 @@ function Loop(loopContent) {
     cleanLoop(loopContent);
 }
 
-function cleanLoop(loopContent){
+function cleanLoop(loopContent) {
 
     printByteStack(byteStack);
 
@@ -315,3 +294,4 @@ function cleanLoop(loopContent){
     document.getElementById('input').value += loopContent;
 
 }
+
