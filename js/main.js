@@ -209,7 +209,11 @@ function ask() {
 
     askInput.addEventListener("keydown", (e) => {
 
-        if (e.key != "Shift" && !e.ctrlKey && e.key != "AltGraph") {
+        if(e.key == "Delete" || e.key == "Escape")
+        {
+            cleanLoop("", "ask-container");
+        }
+        else if (e.key != "Shift" && !e.ctrlKey && e.key != "AltGraph") {
             byteStack[position] = setByteBounds(byteStack[position] + e.key.charCodeAt(0));
             document.getElementsByClassName("ask-container")[0].remove();
             document.getElementById('input').disabled = false;
@@ -239,6 +243,11 @@ function createLoop() {
 
     let loopContent = "[";
     document.getElementById('loopInput').addEventListener("keydown", (e) => {
+
+        if(e.key == "Delete" || e.key == "Escape")
+        {
+            cleanLoop("", "loop-container");
+        }
 
         if (acceptedChars.includes(e.key)) {
             loopContent += e.key;
@@ -281,14 +290,14 @@ function Loop(loopContent) {
         }
     }
 
-    cleanLoop(loopContent);
+    cleanLoop(loopContent, "loop-container");
 }
 
-function cleanLoop(loopContent) {
+function cleanLoop(loopContent, classToDelete) {
 
     printByteStack(byteStack);
 
-    document.getElementsByClassName("loop-container")[0].remove();
+    document.getElementsByClassName(classToDelete)[0].remove();
     document.getElementById('input').disabled = false;
     setOpacity(document.getElementById("main-container"), 1);
     document.getElementById('input').value += loopContent;
