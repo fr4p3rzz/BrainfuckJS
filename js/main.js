@@ -194,6 +194,11 @@ function print() {
 
 function ask() {
 
+    if(document.getElementById("instructions").style.display != "none")
+    {
+        document.getElementById("instructions").style.display = "none";
+    }
+
     const askInput = document.createElement("input");
     const container = document.createElement("div");
     container.setAttribute("class", "container ask-container")
@@ -225,6 +230,11 @@ function ask() {
 }
 
 function createLoop() {
+
+    if(document.getElementById("instructions").style.display != "none")
+    {
+        document.getElementById("instructions").style.display = "none";
+    }
 
     let startLoopPos = code.length;
     const loopInput = document.createElement("input");
