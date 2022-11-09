@@ -73,11 +73,15 @@ input::-webkit-inner-spin-button {
 }
 
 .badge{
-    padding: 2em;
+    padding: 0.7em;
 }
 .badge:hover{
     color: #2b2b2b !important;
     opacity: 0.85;
+}
+
+.nav-link{
+    margin-bottom: 0.2em;
 }
 
 .nav-item{
